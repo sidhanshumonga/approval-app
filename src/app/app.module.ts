@@ -18,6 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import { DateFilterComponent } from './date-filter/date-filter.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import {MatButtonModule} from '@angular/material/button';
     PendingListComponent,
     ApprovedListComponent,
     RejectedListComponent,
-    RejectionPopupComponent
+    RejectionPopupComponent,
+    DateFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatDialogModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     RejectionPopupComponent
