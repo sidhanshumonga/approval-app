@@ -1,0 +1,28 @@
+.leftbar {
+    background: #efefef;
+    height: 100vh;
+}
+
+ul.navigate {
+    height: min-content;
+    padding: 20px 0;
+    list-style-type: none;
+}
+
+ul.navigate li {
+    background-color: lightgray;
+    padding:12px 20px;
+    margin: 2px 0;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+}
+
+ul.navigate li:hover, ul.navigate li.selected {
+    background-color: lightgray;
+    cursor: pointer;
+    width: 110%;
+}
+
+ul.navigate li:focus {
+    outline: none;
+}

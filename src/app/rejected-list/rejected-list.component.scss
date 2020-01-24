@@ -1,0 +1,23 @@
+mat-button-toggle {
+    height: 35px;
+    font-size: 14px;
+    font-style: bold;
+    width:80px;
+}
+
+.mat-button-toggle-disabled {
+    background-color: #e1dde5;
+}
+
+div.center-text {
+    margin-left: -8px;
+    margin-top: -3px;
+}
+
+.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 35px !important;
+}
+
+.lists-table thead {
+    background-color: lightgray !important;
+}

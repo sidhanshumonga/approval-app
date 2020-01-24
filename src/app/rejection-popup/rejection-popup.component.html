@@ -1,0 +1,11 @@
+<h1 class="text-center" mat-dialog-title>Reject Approval</h1>
+<div mat-dialog-content>
+    <p>Reason for rejection?</p>
+    <mat-form-field class="w-100">
+        <input matInput>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions class="my-2 justify-content-end mx-2">
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Reject</button>
+</div>

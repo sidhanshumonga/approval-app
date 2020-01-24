@@ -1,0 +1,12 @@
+<div class="row no-gutters">
+    <div class="col leftbar">
+        <ul class="navigate">
+            <li (click)="navigate('pending')" [class.selected]="selected==='pending'"
+                [routerLink]="['/pending-approvals']" routerLinkActive="router-link-active">Approvals pending</li>
+            <li (click)="navigate('approved')" [class.selected]="selected==='approved'"
+                [routerLink]="['/approved-list']">Approved list</li>
+            <li (click)="navigate('rejected')" [class.selected]="selected==='rejected'"
+                [routerLink]="['/rejected-list']">Rejected list</li>
+        </ul>
+    </div>
+</div>
