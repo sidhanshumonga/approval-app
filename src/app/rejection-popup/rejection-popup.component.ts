@@ -15,4 +15,7 @@ export class RejectionPopupComponent implements OnInit {
   ngOnInit() {
   }
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }
