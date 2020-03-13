@@ -1,0 +1,20 @@
+import { Action } from '@ngrx/store';
+
+export const START_DATE_UPDATE = 'START_DATE_UPDATE';
+export const END_DATE_UPDATE = 'END_DATE_UPDATE';
+
+
+export class StartDateUpdate implements Action {
+    public readonly type = START_DATE_UPDATE;
+    constructor(public payload: any) {}
+}
+
+export class EndDateUpdate implements Action {
+    public readonly type = END_DATE_UPDATE;
+    constructor(public payload: any) {}
+}
+
+
+export type DateActions =
+    | StartDateUpdate
+    | EndDateUpdate

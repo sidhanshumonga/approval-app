@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDatepickerInputEvent, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDatepickerInputEvent, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { ApiService } from '../api.service';
+import { Store } from '@ngrx/store';
+import * as RootReducer from '../app.reducers';
 
 export interface PeriodicElement {
   mother_name: string;
@@ -8,13 +11,6 @@ export interface PeriodicElement {
   birth_defect: string;
 }
 
-const DATA: PeriodicElement[] = [
-  { nbbd_id: 'NBBD-192-232134-201', birth_defect: 'Q001.1', status: 'Approved', mother_name: 'Mother name 1' },
-  { nbbd_id: 'NBBD-192-232134-201', birth_defect: 'Q001.1', status: 'Approved', mother_name: 'Mother name 1' },
-  { nbbd_id: 'NBBD-192-232134-201', birth_defect: 'Q001.1', status: 'Approved', mother_name: 'Mother name 1' },
-  { nbbd_id: 'NBBD-192-232134-201', birth_defect: 'Q001.1', status: 'Approved', mother_name: 'Mother name 1' },
-  { nbbd_id: 'NBBD-192-232134-201', birth_defect: 'Q001.1', status: 'Approved', mother_name: 'Mother name 1' }
-];
 
 @Component({
   selector: 'app-approved-list',
@@ -23,11 +19,17 @@ const DATA: PeriodicElement[] = [
 })
 export class ApprovedListComponent implements OnInit {
 
-  displayedColumns: string[] = ['nbbd_id', 'mother_name', 'birth_defect', 'status'];
-  dataSource = new MatTableDataSource(DATA);
+  displayedColumns: string[] = ['nbbdId', 'motherName', 'status'];
+  dataSource = new MatTableDataSource();
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  constructor() { }
+  constructor(public store: Store<RootReducer.State>, public dialog: MatDialog, public apiService: ApiService) {
+    this.store.select(state => state.approvedList).subscribe(data => {
+      if (data.list) {
+        this.dataSource = new MatTableDataSource(data.list);
+      }
+    });
+  }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;

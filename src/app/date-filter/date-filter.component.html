@@ -1,16 +1,16 @@
 <div class="row justify-content-end">
     <div class="col col-lg-3 col-md-3 col-sm-3 px-5 pt-5">
         <mat-form-field class="mx-5">
-            <input matInput [matDatepicker]="startDatePicker" placeholder="Start date">
-                <!-- (dateChange)="updateDate('startDate', $event)"> -->
+            <input matInput [matDatepicker]="startDatePicker" placeholder="Start date"
+                (dateChange)="updateDate('startDate', $event)">
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
         </mat-form-field>
     </div>
     <div class="col col-lg-4 col-md-4 col-sm-4 px-5 pt-5">
         <mat-form-field class="mx-5">
-            <input matInput [matDatepicker]="endDatePicker" placeholder="End date">
-                <!-- (dateChange)="updateDate('endDate', $event)"> -->
+            <input matInput [matDatepicker]="endDatePicker" placeholder="End date"
+                (dateChange)="updateDate('endDate', $event)">
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
         </mat-form-field>

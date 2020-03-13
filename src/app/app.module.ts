@@ -17,9 +17,24 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { DateFilterComponent } from './date-filter/date-filter.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+
+
+// ngrx
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+
+// reducers
+import { appReducers } from './app.reducers';
+
+// effects
+// App ngrx effects
+import { EFFECTS } from './app.effects'
 
 
 @NgModule({
@@ -46,7 +61,11 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     ReactiveFormsModule,
     MatButtonToggleModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule,
+    StoreModule.forRoot(appReducers),
+    StoreDevtoolsModule.instrument({ name: 'Essenvia NgRx Store DevTools', maxAge: 100 }),
+    EffectsModule.forRoot(EFFECTS),
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
