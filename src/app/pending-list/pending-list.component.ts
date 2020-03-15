@@ -4,6 +4,8 @@ import { RejectionPopupComponent } from '../rejection-popup/rejection-popup.comp
 import { ApiService } from '../api.service';
 import { Store } from '@ngrx/store';
 import * as RootReducer from '../app.reducers';
+import * as PendingListActions from './state/pending-list.actions';
+
 
 @Component({
   selector: 'app-pending-list',
@@ -30,21 +32,34 @@ export class PendingListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  updateStatus(value: string) {
+  updateStatus(value: string, event: any) {
     if (value === 'reject') {
-      this.openDialog();
+      this.openDialog(event);
+    } else {
+      this.store.dispatch(new PendingListActions.UpdateEventRequest({
+        eventId: event.event,
+        // tslint:disable-next-line: object-literal-shorthand
+        event: event,
+        value: { val: '1', reason: ''}
+      }));
     }
   }
 
 
-  openDialog(): void {
+  openDialog(event: any): void {
     const dialogRef = this.dialog.open(RejectionPopupComponent, {
       width: '40%',
       height: 'auto'
     });
 
+
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      this.store.dispatch(new PendingListActions.UpdateEventRequest({
+        eventId: event.event,
+        // tslint:disable-next-line: object-literal-shorthand
+        event: event,
+        value: { val: '2', reason: result}
+      }));
     });
   }
 }

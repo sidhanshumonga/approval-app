@@ -6,19 +6,12 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ApiService {
-  // tslint:disable-next-line: max-line-length
-  private COMPLETED_EVENTS_API = '../../events.json?program=JV8sufzvmmy&status=COMPLETED&orgUnit=BKlXSKprcqG&ouMode=DESCENDANTS&startDate=2020-02-01&endDate=2020-02-10&fields=status,dataValues,orgUnit&paging=false';
 
-  // tslint:disable-next-line: max-line-length
-  private PENDING_EVENTS_API = '../../events.json?program=JV8sufzvmmy&status=ACTIVE&orgUnit=BKlXSKprcqG&ouMode=DESCENDANTS&startDate=&endDate=&fields=status,dataValues,orgUnit&paging=false';
-
-  // tslint:disable-next-line: max-line-length
-  private ANALYTICS_API = '../../29/analytics/events/query/JV8sufzvmmy.json?startDate=&endDate=&dimension=ou:BKlXSKprcqG&dimension=NGv5x5xYlbD&dimension=B6u9xYMEYW5&dimension=eVqE49AkPbA&stage=Mc1pLiYiX5W&displayProperty=NAME&outputType=EVENT&desc=eventdate&pageSize=100&page=1&outputIdScheme=NAME';
   constructor(private http: HttpClient) { }
 
   fetchEvents(params: any) {
     // tslint:disable-next-line: max-line-length
-    return this.http.get('../../events.json?program=JV8sufzvmmy&status=ACTIVE&orgUnit=BKlXSKprcqG&ouMode=DESCENDANTS&startDate=' + params.startDate + '&endDate=' + params.endDate + '&fields=status,dataValues,orgUnit&paging=false').pipe(
+    return this.http.get('../../events.json?program=JV8sufzvmmy&status=ACTIVE&orgUnit=BKlXSKprcqG&ouMode=DESCENDANTS&startDate=' + params.startDate + '&endDate=' + params.endDate + '&fields=status,dataValues,orgUnit,program,eventDate,event&paging=false').pipe(
       // tslint:disable-next-line: no-string-literal
       map(res => this.mapPendingEvents(res['events']))
     );
@@ -40,6 +33,13 @@ export class ApiService {
     );
   }
 
+  updateEvent(eventId: any, data: any, valueToUpdate: any) {
+    // tslint:disable-next-line: prefer-const
+    const mutedData = this.mapFormattedData(data, valueToUpdate);
+    console.log(mutedData);
+    return this.http.put('../../events/' + eventId + '.json', mutedData);
+  }
+
   mapPendingEvents(data: any) {
     const mutedArr = [];
     // tslint:disable-next-line: prefer-const
@@ -48,14 +48,16 @@ export class ApiService {
       let pending = false;
       // tslint:disable-next-line: prefer-const
       for (let elm of element.dataValues) {
-        if (elm.dataElement === 'o6dwSWZPRSD' && elm.value === '1') { pending = true; }
+        if (elm.dataElement === 'NGv5x5xYlbD' && elm.value === 'true') { pending = true; }
         // tslint:disable-next-line: no-string-literal
         if (elm.dataElement === 'B6u9xYMEYW5') { obj['motherName'] = elm.value; }
         // tslint:disable-next-line: no-string-literal
         if (elm.dataElement === 'eVqE49AkPbA') { obj['nbbdId'] = elm.value; }
       }
       if (pending) {
-        mutedArr.push(obj);
+        // tslint:disable-next-line: no-string-literal
+        obj['event'] = element;
+        mutedArr.push({ ...obj });
       }
     }
     return mutedArr;
@@ -74,9 +76,11 @@ export class ApiService {
         if (elm.dataElement === 'B6u9xYMEYW5') { obj['motherName'] = elm.value; }
         // tslint:disable-next-line: no-string-literal
         if (elm.dataElement === 'eVqE49AkPbA') { obj['nbbdId'] = elm.value; }
+        // tslint:disable-next-line: no-string-literal
+        if(elm.dataElement === 'sSloQt4z2bz') { obj['reason'] = elm.value; }
       }
       if (rejected) {
-        mutedArr.push(obj);
+        mutedArr.push({ ...obj });
       }
     }
     return mutedArr;
@@ -97,5 +101,31 @@ export class ApiService {
       mutedArr.push({ ...obj, status: 'Approved' });
     }
     return mutedArr;
+  }
+
+  mapFormattedData(event: any, value: any) {
+    // tslint:disable-next-line: prefer-const
+    let mutedDataValues = event.dataValues;
+
+    // tslint:disable-next-line: prefer-const
+    // tslint:disable-next-line: forin
+    for (let dv in mutedDataValues) {
+      if (mutedDataValues[dv].dataElement === 'o6dwSWZPRSD') {
+        mutedDataValues[dv].value = value.val;
+      }
+
+      if (mutedDataValues[dv].dataElement === 'NGv5x5xYlbD' && value.val === '2') {
+        mutedDataValues[dv].value = 'false';
+      }
+    }
+
+    if (value.val === '2') {
+      mutedDataValues.push({
+        dataElement: 'sSloQt4z2bz',
+        value: value.reason
+      });
+    }
+
+    return { ...event, dataValues: mutedDataValues, status: value === '1' ? 'COMPLETED' : 'ACTIVE' };
   }
 }

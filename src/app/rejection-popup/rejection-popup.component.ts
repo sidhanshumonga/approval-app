@@ -7,7 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./rejection-popup.component.scss']
 })
 export class RejectionPopupComponent implements OnInit {
-
+  reason = '';
   constructor(
     public dialogRef: MatDialogRef<RejectionPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
