@@ -25,6 +25,7 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
+              "src/logo.png",
               "src/assets",
               "src/manifest.webapp"
             ],
