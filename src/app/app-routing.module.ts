@@ -11,10 +11,11 @@ const routes: Routes = [
   { path: 'pending-approvals', component: PendingListComponent },
   { path: 'approved-list', component: ApprovedListComponent },
   { path: 'rejected-list', component: RejectedListComponent },
+  // { path: '', redirectTo: '/pending-approvals', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

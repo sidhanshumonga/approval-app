@@ -5,7 +5,9 @@ import { ApiService } from '../api.service';
 import { Store } from '@ngrx/store';
 import * as RootReducer from '../app.reducers';
 import * as PendingListActions from './state/pending-list.actions';
-
+import { Observable } from 'rxjs';
+import * as constants from '../CONSTANTS';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pending-list',
@@ -17,15 +19,18 @@ export class PendingListComponent implements OnInit {
   displayedColumns: string[] = ['nbbdId', 'motherName', 'action'];
   dataSource = new MatTableDataSource();
   public events: any;
+  loading$ = new Observable<any>();
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(public store: Store<RootReducer.State>, public dialog: MatDialog, public apiService: ApiService) {
+  constructor(public store: Store<RootReducer.State>, public dialog: MatDialog, public apiService: ApiService, public router: Router) {
     this.store.select(state => state.pendingList).subscribe(data => {
       if (data.list) {
         this.dataSource = new MatTableDataSource(data.list);
       }
     });
+
+    this.loading$ = this.store.select(state => state.pendingList.loading);
   }
 
   ngOnInit() {
@@ -40,7 +45,7 @@ export class PendingListComponent implements OnInit {
         eventId: event.event,
         // tslint:disable-next-line: object-literal-shorthand
         event: event,
-        value: { val: '1', reason: ''}
+        value: { val: '1', reason: '' }
       }));
     }
   }
@@ -54,12 +59,18 @@ export class PendingListComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(result => {
-      this.store.dispatch(new PendingListActions.UpdateEventRequest({
-        eventId: event.event,
-        // tslint:disable-next-line: object-literal-shorthand
-        event: event,
-        value: { val: '2', reason: result}
-      }));
+      if (result) {
+        this.store.dispatch(new PendingListActions.UpdateEventRequest({
+          eventId: event.event,
+          // tslint:disable-next-line: object-literal-shorthand
+          event: event,
+          value: { val: '2', reason: result }
+        }));
+      }
     });
+  }
+
+  rowClicked(event) {
+   window.open(constants.redirectToEvent + 'event=' + event.event.event + '&ou=' + event.event.orgUnit, '_blank' );
   }
 }

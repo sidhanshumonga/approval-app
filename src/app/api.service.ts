@@ -125,7 +125,8 @@ export class ApiService {
         value: value.reason
       });
     }
-
-    return { ...event, dataValues: mutedDataValues, status: value === '1' ? 'COMPLETED' : 'ACTIVE' };
+    // tslint:disable-next-line: no-string-literal
+    event['status'] =  value.val === '1' ? 'COMPLETED' : 'ACTIVE';
+    return { ...event, dataValues: mutedDataValues };
   }
 }

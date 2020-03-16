@@ -10,20 +10,29 @@ export interface ListContent {
 
 export interface RejectedListState {
     list: ListContent[];
+    loading: boolean;
 }
 
 const initialState = {
-    list: []
+    list: [],
+    loading: false
 }
 
 export function reducer(state: RejectedListState = initialState, action: Actions.RejectedListActions): RejectedListState {
     switch (action.type) {
+        case Actions.FETCH_REJECTED_EVENTS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+
         case Actions.FETCH_REJECTED_EVENTS_SUCCESS:
             return {
-                list: action.payload
+                list: action.payload,
+                loading: false
             };
 
         default:
-            return state
+            return state;
     }
 }

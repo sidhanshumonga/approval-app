@@ -10,17 +10,26 @@ export interface ListContent {
 
 export interface PendingListState {
     list: ListContent[];
+    loading: boolean;
 }
 
 const initialState = {
-    list: []
-}
+    list: [],
+    loading: false
+};
 
 export function reducer(state: PendingListState = initialState, action: Actions.PendingListActions): PendingListState {
     switch (action.type) {
+        case Actions.FETCH_PENDING_EVENTS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+
         case Actions.FETCH_PENDING_EVENTS_SUCCESS:
             return {
-                list: action.payload
+                list: action.payload,
+                loading: false
             };
         default:
             return state;

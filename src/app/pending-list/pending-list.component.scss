@@ -25,3 +25,10 @@ div.center-text {
 button:focus {
     outline: none;
 }
+
+a.eventId, a.eventId:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: black;
+}
+

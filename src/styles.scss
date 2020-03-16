@@ -2,3 +2,25 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.overlay-properties {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+}
+
+.loading-overlay-section {
+    @extend .overlay-properties;
+
+    opacity: 0.6;
+    background-color: #808080;
+    text-indent: -9999px;
+    z-index: 11 !important;
+    background-image: url(assets/wait.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+}

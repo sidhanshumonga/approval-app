@@ -3,6 +3,7 @@ import { MatDatepickerInputEvent, MatSort, MatTableDataSource, MatDialog } from 
 import { ApiService } from '../api.service';
 import { Store } from '@ngrx/store';
 import * as RootReducer from '../app.reducers';
+import { Observable } from 'rxjs';
 
 export interface PeriodicElement {
   mother_name: string;
@@ -21,6 +22,7 @@ export class ApprovedListComponent implements OnInit {
 
   displayedColumns: string[] = ['nbbdId', 'motherName', 'status'];
   dataSource = new MatTableDataSource();
+  loading$ = new Observable<any>();
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   constructor(public store: Store<RootReducer.State>, public dialog: MatDialog, public apiService: ApiService) {
@@ -29,6 +31,8 @@ export class ApprovedListComponent implements OnInit {
         this.dataSource = new MatTableDataSource(data.list);
       }
     });
+
+    this.loading$ = this.store.select(state => state.rejectedList.loading);
   }
 
   ngOnInit() {

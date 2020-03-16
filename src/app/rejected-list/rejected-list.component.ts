@@ -3,6 +3,7 @@ import { MatDatepickerInputEvent, MatSort, MatTableDataSource, MatDialog } from 
 import { Store } from '@ngrx/store';
 import { ApiService } from '../api.service';
 import * as RootReducer from '../app.reducers';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-rejected-list',
@@ -13,6 +14,7 @@ export class RejectedListComponent implements OnInit {
   displayedColumns: string[] = ['nbbdId', 'motherName', 'reason'];
   dataSource = new MatTableDataSource();
   public events: any;
+  loading$ = new Observable<any>();
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   constructor(public store: Store<RootReducer.State>, public dialog: MatDialog, public apiService: ApiService) {
@@ -21,6 +23,9 @@ export class RejectedListComponent implements OnInit {
         this.dataSource = new MatTableDataSource(data.list);
       }
     });
+
+    this.loading$ = this.store.select(state => state.rejectedList.loading);
+
   }
 
   ngOnInit() {
