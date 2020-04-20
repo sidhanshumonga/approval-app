@@ -1,5 +1,5 @@
 .leftbar {
-    background: #efefef;
+    background: #e3e3e3;
     height: 100vh;
 }
 
@@ -18,8 +18,16 @@ ul.navigate li {
 }
 
 ul.navigate li:hover, ul.navigate li.selected {
-    background-color: lightgray;
+    background-color: rgb(63, 123, 168);
     cursor: pointer;
+    color:white;
+}
+
+ul.navigate li:hover {
+    width: 105%;
+}
+
+ul.navigate li.selected {
     width: 110%;
 }
 

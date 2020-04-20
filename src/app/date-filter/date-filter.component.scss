@@ -1,0 +1,18 @@
+.clear-selection {
+    margin: 0;
+    display: inline;
+    vertical-align: top;
+    cursor: pointer;
+    font-size: 13px;
+    color:rgb(28, 106, 179)
+}
+
+.clear-selection:hover {
+    text-decoration: underline;
+}
+
+.clear-selection-icon {
+    display: inline;
+    font-size: 18px;
+    color:rgb(28, 106, 179)
+}

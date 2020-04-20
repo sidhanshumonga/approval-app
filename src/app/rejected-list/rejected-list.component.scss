@@ -19,5 +19,15 @@ div.center-text {
 }
 
 .lists-table thead {
-    background-color: lightgray !important;
+    background-color: rgb(63, 123, 168) !important;
+}
+
+.lists-table thead tr th {
+    color: white;
+}
+
+a.eventId, a.eventId:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: black;
 }

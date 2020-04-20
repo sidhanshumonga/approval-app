@@ -21,12 +21,14 @@ export class PendingListComponent implements OnInit {
   public events: any;
   loading$ = new Observable<any>();
 
+  show = false;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public store: Store<RootReducer.State>, public dialog: MatDialog, public apiService: ApiService, public router: Router) {
     this.store.select(state => state.pendingList).subscribe(data => {
       if (data.list) {
         this.dataSource = new MatTableDataSource(data.list);
+        if (data.list.length > 0 ) { this.show = true; } else { this.show = false; }
       }
     });
 
@@ -71,6 +73,6 @@ export class PendingListComponent implements OnInit {
   }
 
   rowClicked(event) {
-   window.open(constants.redirectToEvent + 'event=' + event.event.event + '&ou=' + event.event.orgUnit, '_blank' );
+   window.open(constants.BASE_URL + constants.redirectToEvent + 'event=' + event.event.event + '&ou=' + event.event.orgUnit, '_blank' );
   }
 }

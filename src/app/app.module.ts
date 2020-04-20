@@ -19,8 +19,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { DateFilterComponent } from './date-filter/date-filter.component';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import {MatCardModule} from '@angular/material/card';
 
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 // ngrx
@@ -65,6 +65,7 @@ import { AppLoaderComponent } from './loader/app-loader.component'
     MatButtonModule,
     HttpClientModule,
     MatProgressSpinnerModule,
+    MatCardModule,
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({ name: 'Essenvia NgRx Store DevTools', maxAge: 100 }),
     EffectsModule.forRoot(EFFECTS),

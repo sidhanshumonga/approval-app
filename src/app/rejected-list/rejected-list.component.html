@@ -1,7 +1,10 @@
 <app-loader *ngIf="(loading$ | async)"></app-loader>
 <div class="row">
     <div class="col p-5">
-        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100 lists-table">
+        <mat-card class="w-75 text-center m-auto p-5" *ngIf="!show">
+            No pending approval within selected date range. Change date range to see pending approvals.
+        </mat-card>
+        <table *ngIf="show" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100 lists-table">
 
             <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
@@ -9,7 +12,8 @@
             <!-- NBBD Id Column -->
             <ng-container matColumnDef="nbbdId">
                 <th mat-header-cell *matHeaderCellDef style="width:50%"> NBBD ID </th>
-                <td mat-cell *matCellDef="let element" style="width:50%"> {{element.nbbdId}} </td>
+                <td mat-cell *matCellDef="let element" style="width:50%"> <a class="eventId"
+                        (click)="rowClicked(element)">{{element.nbbdId}}</a> </td>
             </ng-container>
 
             <!-- Mother name Column -->

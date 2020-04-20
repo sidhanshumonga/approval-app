@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDatepickerInputEvent } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDatepickerInputEvent, MatInput } from '@angular/material';
 import { Store } from '@ngrx/store';
 import * as RootReducer from '../app.reducers';
 import * as DateActions from './state/date-filter.actions';
@@ -14,6 +14,8 @@ import * as moment from 'moment';
   styleUrls: ['./date-filter.component.scss']
 })
 export class DateFilterComponent implements OnInit {
+  @ViewChild('fromInput', { read: MatInput, static: true }) fromInput: MatInput;
+  @ViewChild('toInput', { read: MatInput, static: true }) toInput: MatInput;
 
   constructor(public store: Store<RootReducer.State>) {
   }
@@ -37,6 +39,13 @@ export class DateFilterComponent implements OnInit {
       this.store.dispatch(new ApprovedListActions.FetchApprovedEventsRequest({ startDate: this.startDate, endDate: this.endDate }));
       this.store.dispatch(new RejectedListActions.FetchRejectedEventsRequest({ startDate: this.startDate, endDate: this.endDate }));
     }
+  }
+
+  resetDates() {
+    this.fromInput.value = '';
+    this.toInput.value = '';
+    this.store.dispatch(new DateActions.StartDateUpdate(''));
+    this.store.dispatch(new DateActions.EndDateUpdate(''));
   }
 
 }

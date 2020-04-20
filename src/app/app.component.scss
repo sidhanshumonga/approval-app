@@ -1,0 +1,33 @@
+.header-row {
+    background-color: rgb(39, 102, 150);
+    height: 52px;
+}
+
+.app-icon {
+    width: 150px;
+    height: 42px;
+    display: inline-block;
+}
+
+.app-text {
+    color: white;
+    font-size: 18px;
+    margin: 0;
+    display: inline-block;
+}
+
+a.app-text {
+    cursor: pointer;
+}
+
+.home-icon {
+    color: white;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: sub;
+}
+
+a.app-text:hover {
+    color: white;
+    text-decoration: underline;
+}

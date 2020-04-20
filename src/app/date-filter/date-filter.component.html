@@ -2,7 +2,7 @@
     <div class="col col-lg-3 col-md-3 col-sm-3 px-5 pt-5">
         <mat-form-field class="mx-5">
             <input matInput [matDatepicker]="startDatePicker" placeholder="Start date"
-                (dateChange)="updateDate('startDate', $event)">
+                (dateChange)="updateDate('startDate', $event)" #fromInput>
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
         </mat-form-field>
@@ -10,9 +10,15 @@
     <div class="col col-lg-4 col-md-4 col-sm-4 px-5 pt-5">
         <mat-form-field class="mx-5">
             <input matInput [matDatepicker]="endDatePicker" placeholder="End date"
-                (dateChange)="updateDate('endDate', $event)">
+                (dateChange)="updateDate('endDate', $event)" #toInput>
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
         </mat-form-field>
+    </div>
+</div>
+<div class="row justify-content-end mr-5">
+    <div class="col col-lg-3 col-md-3 col-sm-3 px-5 text-right">
+        <i class="material-icons clear-selection-icon">close</i>
+        <p class="clear-selection" (click)="resetDates()">Clear selection</p>
     </div>
 </div>

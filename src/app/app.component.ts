@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import * as constants from './CONSTANTS';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'approval-app';
+  title = 'NBBD Approval app';
+
+  constructor(@Inject(DOCUMENT) private document: any) { }
+
+  goToHome() {
+    const base = constants.BASE_URL;
+    const dashboard = constants.DHIS_DASHBOARD;
+    this.document.location.assign(base + dashboard);
+  }
 }
