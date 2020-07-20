@@ -18,8 +18,9 @@ export class ApprovedListEffects {
     public fetchEventsRequest$: Observable<Action> = this.actions$.pipe(
         ofType(ApprovedListActions.FETCH_APPROVED_EVENTS_REQUEST),
         map((action: ApprovedListActions.FetchApprovedEventsRequest) => action.payload),
-        switchMap(payload => {
-            return this.apiService.fetchCompletedEvents(payload);
+        withLatestFrom(this.store),
+        switchMap(([payload, state]) => {
+            return this.apiService.fetchCompletedEvents(payload, state.common.orgUnit);
         }),
         map(response =>
             new ApprovedListActions.FetchApprovedEventsSuccess(response)
@@ -27,6 +28,7 @@ export class ApprovedListEffects {
     );
     constructor(
         public actions$: Actions,
+        public store: Store<RootReducer.State>,
         public apiService: ApiService
     ) { }
 }

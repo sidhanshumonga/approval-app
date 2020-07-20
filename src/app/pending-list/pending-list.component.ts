@@ -8,7 +8,7 @@ import * as PendingListActions from './state/pending-list.actions';
 import { Observable } from 'rxjs';
 import * as constants from '../CONSTANTS';
 import { Router } from '@angular/router';
-
+import * as DateActions from '../date-filter/state/date-filter.actions'
 @Component({
   selector: 'app-pending-list',
   templateUrl: './pending-list.component.html',
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class PendingListComponent implements OnInit {
-  displayedColumns: string[] = ['nbbdId', 'motherName', 'action'];
+  displayedColumns: string[] = ['ou', 'nbbdId', 'motherName', 'action'];
   dataSource = new MatTableDataSource();
   public events: any;
   loading$ = new Observable<any>();
@@ -27,8 +27,20 @@ export class PendingListComponent implements OnInit {
   constructor(public store: Store<RootReducer.State>, public dialog: MatDialog, public apiService: ApiService, public router: Router) {
     this.store.select(state => state.pendingList).subscribe(data => {
       if (data.list) {
-        this.dataSource = new MatTableDataSource(data.list);
-        if (data.list.length > 0 ) { this.show = true; } else { this.show = false; }
+        let obj = [];
+        let i = 0;
+        for (let elm of data.list) {
+          this.apiService.fetchOrgUnitPath(elm).subscribe(res => {
+            // console.log(res);
+            elm['ou'] = res;
+            obj.push(elm);
+            i++;
+            if (data.list.length === i) {
+              this.dataSource = new MatTableDataSource(obj);
+            }
+          });
+        }
+        if (data.list.length > 0) { this.show = true; } else { this.show = false; }
       }
     });
 
@@ -37,6 +49,8 @@ export class PendingListComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
+    this.store.dispatch(new PendingListActions.ClearEvents());
+    this.store.dispatch(new DateActions.ClearDates(''));
   }
 
   updateStatus(value: string, event: any) {
@@ -73,6 +87,6 @@ export class PendingListComponent implements OnInit {
   }
 
   rowClicked(event) {
-   window.open(constants.BASE_URL + constants.redirectToEvent + 'event=' + event.event.event + '&ou=' + event.event.orgUnit, '_blank' );
+    window.open(constants.BASE_URL + constants.redirectToEvent + 'event=' + event.event.event + '&ou=' + event.event.orgUnit, '_blank');
   }
 }

@@ -31,6 +31,18 @@ export function reducer(state: PendingListState = initialState, action: Actions.
                 list: action.payload,
                 loading: false
             };
+
+        case Actions.FETCH_PENDING_EVENTS_FAILURE:
+            return {
+                ...state,
+                loading: false
+            };
+
+        case Actions.CLEAR_EVENTS:
+            return {
+                list: [],
+                loading: false
+            };
         default:
             return state;
     }

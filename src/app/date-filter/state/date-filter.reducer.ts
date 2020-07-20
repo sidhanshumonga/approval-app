@@ -17,6 +17,8 @@ export function reducer(state: DateState = initialState, action: Actions.DateAct
             return { ...state, startDate: action.payload };
         case Actions.END_DATE_UPDATE:
             return { ...state, endDate: action.payload };
+        case Actions.CLEAR_DATES:
+            return { startDate: '', endDate: '' };
         default:
             return state;
     }

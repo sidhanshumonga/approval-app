@@ -8,7 +8,12 @@
 
             <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
-
+            <!-- Ou Column -->
+            <ng-container matColumnDef="ou">
+                <th mat-header-cell *matHeaderCellDef style="width:50%"> Organisation </th>
+                <td mat-cell *matCellDef="let element" style="width:50%">{{element.ou}}</td>
+            </ng-container>
+            
             <!-- NBBD Id Column -->
             <ng-container matColumnDef="nbbdId">
                 <th mat-header-cell *matHeaderCellDef style="width:50%"> NBBD ID </th>

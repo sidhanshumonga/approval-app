@@ -7,6 +7,8 @@ export const FETCH_PENDING_EVENTS_FAILURE = 'FETCH_PENDING_EVENTS_FAILURE';
 export const UPDATE_EVENT_REQUEST = 'UPDATE_EVENT_REQUEST';
 export const UPDATE_EVENT_SUCCESS = 'UPDATE_EVENT_SUCCESS';
 
+export const CLEAR_EVENTS = 'CLEAR_EVENTS'
+
 export class PendingListUpdate implements Action {
     public readonly type = PENDING_LIST_UPDATE;
     constructor(public payload: any) { }
@@ -36,6 +38,10 @@ export class UpdateEventSuccess implements Action {
     public readonly type = UPDATE_EVENT_SUCCESS;
 }
 
+export class ClearEvents implements Action {
+    public readonly type = CLEAR_EVENTS;
+}
+
 
 export type PendingListActions =
     | PendingListUpdate
@@ -43,4 +49,5 @@ export type PendingListActions =
     | FetchEventsSuccess
     | FetchEventsFailure
     | UpdateEventRequest
-    | UpdateEventSuccess;
+    | UpdateEventSuccess
+    | ClearEvents;

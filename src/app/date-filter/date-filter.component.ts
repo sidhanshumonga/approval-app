@@ -26,6 +26,10 @@ export class DateFilterComponent implements OnInit {
 
   updateDate(type: string, event: MatDatepickerInputEvent<Date>) {
     const date = moment(event.value).format('YYYY-MM-DD');
+    this.store.select(state => state.dates).subscribe(res => {
+      this.startDate = res.startDate;
+      this.endDate = res.endDate;
+    })
     if (type === 'startDate') {
       this.startDate = date;
       this.store.dispatch(new DateActions.StartDateUpdate(date));
@@ -44,8 +48,10 @@ export class DateFilterComponent implements OnInit {
   resetDates() {
     this.fromInput.value = '';
     this.toInput.value = '';
-    this.store.dispatch(new DateActions.StartDateUpdate(''));
-    this.store.dispatch(new DateActions.EndDateUpdate(''));
+    this.store.dispatch(new DateActions.ClearDates(''));
+    this.store.dispatch(new PendingListActions.ClearEvents());
+    this.store.dispatch(new ApprovedListActions.ClearEvents());
+    this.store.dispatch(new RejectedListActions.ClearEvents());
   }
 
 }

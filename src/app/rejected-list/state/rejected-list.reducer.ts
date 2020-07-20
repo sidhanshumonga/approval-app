@@ -32,6 +32,12 @@ export function reducer(state: RejectedListState = initialState, action: Actions
                 loading: false
             };
 
+        case Actions.CLEAR_EVENTS:
+            return {
+                list: [],
+                loading: false
+            };
+
         default:
             return state;
     }

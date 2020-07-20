@@ -5,6 +5,8 @@ export const FETCH_REJECTED_EVENTS_REQUEST = 'FETCH_REJECTED_EVENTS_REQUEST';
 export const FETCH_REJECTED_EVENTS_SUCCESS = 'FETCH_REJECTED_EVENTS_SUCCESS';
 export const FETCH_REJECTED_EVENTS_FAILURE = 'FETCH_REJECTED_EVENTS_FAILURE';
 
+export const CLEAR_EVENTS = 'CLEAR_EVENTS';
+
 export class RejectedListUpdate implements Action {
     public readonly type = REJECTED_LIST_UPDATE;
     constructor(public payload: any) {}
@@ -25,9 +27,13 @@ export class FetchRejectedEventsFailure implements Action {
     constructor(public payload: any) {}
 }
 
+export class ClearEvents implements Action {
+    public readonly type = CLEAR_EVENTS;
+}
 
 export type RejectedListActions =
     | RejectedListUpdate
     | FetchRejectedEventsRequest
     | FetchRejectedEventsSuccess
-    | FetchRejectedEventsFailure;
+    | FetchRejectedEventsFailure
+    | ClearEvents;
